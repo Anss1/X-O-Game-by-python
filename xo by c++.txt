@@ -1,0 +1,255 @@
+#include <iostream>
+using namespace std;
+
+char matrix[3][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'}};
+char player = 'x';
+int v=1,col=0,row=0;
+void game_draw()
+{
+	cout<<endl;
+	cout<<" "<<matrix[0][0]<<" | "<<matrix[0][1]<<" | "<<matrix[0][2]<<endl;
+	cout<<"---|---|---"<<endl;
+	cout<<" "<<matrix[1][0]<<" | "<<matrix[1][1]<<" | "<<matrix[1][2]<<endl;
+	cout<<"---|---|---"<<endl;
+	cout<<" "<<matrix[2][0]<<" | "<<matrix[2][1]<<" | "<<matrix[2][2]<<endl;
+}
+
+
+
+
+void input(int a)
+{
+	int l = 0,k = 0;
+	//game play here...........
+	if(a <= 3 && a > 0)
+	{ matrix[0][a-1]=player;}
+    
+	if(a > 3 && a < 10)
+       { 
+		   while(a > 3 && a < 10)
+            {
+				l += 1;
+				a -= 3;
+		    }
+        k = a - 1;    
+		matrix[l][k]=player;
+       }
+
+}
+
+
+
+void change_role()
+{
+	if(player == 'x')
+		player = 'o';
+	else
+		player = 'x';
+}
+
+
+
+int check_num(int c)
+{
+	int r,i=0,j=0,val=1,hant1,hant2,d=0,f=0;
+	if(c <= 3 && c > 0)
+		{
+			while(matrix[0][c-1] == 'x'||matrix[0][c-1] == 'o')
+		{
+			cout<<"Error......\" this number already taken !!! \";Please,,, select another number : ";
+			cin>>r;
+			
+			while(r>9)
+			{cout<<"Error..... \" Number is greater than required !!! \" ;Please,,, select another number : ";
+			cin>>r;
+			}
+			val=-1;
+			if(r!=c && matrix[0][r-1] != 'x' && matrix[0][r-1] != 'o')
+			{break;}
+			
+		}
+			if(val==1)
+			    {return c;}
+			else
+			    {return r;val=1;}
+		 
+	    }
+	
+	
+	 if(c > 3 && c < 10)
+	{
+		 hant1=c;
+		 
+		 while(c > 3 && c < 10)
+            {
+				i += 1;
+				c -= 3;
+		    }
+         j = c - 1;    
+		while (matrix[i][j] == 'x'||matrix[i][j] == 'o')
+		{
+			cout<<"Error...... \" this number is already taken !!! \";Please,,, select another number : ";
+			cin>>r;
+			
+			while(r>9)
+			{cout<<"Error..... \" Number is greater than required !!! \" ;Please,,, select another number : ";
+			cin>>r;
+			}
+			val=-1;
+			 hant2=r;
+		 
+		 while(r > 3 && r < 10)
+            {
+				d += 1;
+				r -= 3;
+		    }
+           f = r - 1;    
+			if(hant2!=hant1 && matrix[d][f] != 'x' && matrix[d][f] != 'o')
+			{break;}
+			
+			d=0;f=0;
+		}
+		if(val==1)
+			{return hant1;}
+		else
+			{return hant2;val=1;}
+	}
+	 while(c>9)
+			{cout<<"Error..... \" Number is greater than required !!! \" ;Please,,, select another number : ";
+			cin>>c;
+			if(c<9)
+			{return c;}
+			}
+
+	
+}
+
+
+
+bool check_win()
+{
+	
+	if(v==1)
+	 {
+		 //player 1 (x)......................................................................................../////////////
+	
+	//for columuns
+	
+	while(col<3)
+	{
+		if((matrix[0][col]=='x'&& matrix[1][col]=='x'&& matrix[2][col])=='x')
+		{
+			return true;break;
+		}
+		col++;
+	}
+	col=0;
+	
+
+	//for rows
+	while(row<3) 
+	{
+		if(matrix[row][0]=='x'&& matrix[row][1]=='x'&& matrix[row][2]=='x')
+		{
+			return true;break;
+		}
+		row++;
+	}
+	row=0;
+
+	//for diameters
+	if(matrix[0][0]=='x'&& matrix[1][1]=='x'&& matrix[2][2]=='x')
+		{
+			return true;
+		}
+	if(matrix[0][2]=='x'&& matrix[1][1]=='x'&& matrix[2][0]=='x')
+		{
+			return true;
+	    }
+	v=-1;
+	}
+
+
+	if(v==-1)
+    {
+		//player 2 (o)............................................................../////////////////........
+	
+	//for columuns
+	while(col<3)
+	{
+		if(matrix[0][col]=='o'&& matrix[1][col]=='o'&& matrix[2][col]=='o')
+		{
+			return true;break;
+		}
+		col++;
+	}
+	col=0;
+
+	//for rows
+	while(row<3)
+	{
+		if(matrix[row][0]=='o'&& matrix[row][1]=='o'&& matrix[row][2]=='o')
+		{
+			return true;break;
+		}
+		row++;
+	}
+	row=0;
+
+	//for diameters
+	if(matrix[0][0]=='o'&& matrix[1][1]=='o'&& matrix[2][2]=='o')
+		{
+			return true;
+		}
+	if(matrix[0][2]=='o'&& matrix[1][1]=='o'&& matrix[2][0]=='o')
+		{
+			return true;
+		}
+	v=1;
+	}
+
+    return false;
+	
+}
+
+
+int main(){
+	int in,out,coun=0;
+	
+	while(1)
+	{
+		game_draw();
+		cout<<endl;
+		cout<<"Enter the number you select: ";
+		cin>>in;
+		out = check_num(in);
+		input(out);
+		if(check_win()&&v==1)
+         {
+			 game_draw();
+			 cout<<endl;
+			 cout<<"player \"X\" wins (:"<<endl;
+		break;}
+
+        if(check_win()&&v==-1)
+         {
+			 game_draw();
+			 cout<<endl;
+			 cout<<"player \"O\" wins (:"<<endl;
+	    break;}
+
+		if( coun==8)
+         {
+			 game_draw();
+			 cout<<endl;
+			 cout<<"game draw !! (;"<<endl;
+		 break;}
+
+		change_role();
+		coun++;
+		system("cls");
+	}
+
+
+
+}
