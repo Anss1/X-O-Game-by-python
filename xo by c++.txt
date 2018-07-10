@@ -1,5 +1,9 @@
 #include <iostream>
+
 using namespace std;
+
+
+
 
 char matrix[3][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'}};
 char player = 'x';
@@ -23,29 +27,30 @@ void input(int a)
 	//game play here...........
 	if(a <= 3 && a > 0)
 	{ matrix[0][a-1]=player;}
-    
+
 	if(a > 3 && a < 10)
-       { 
+       {
 		   while(a > 3 && a < 10)
             {
 				l += 1;
 				a -= 3;
 		    }
-        k = a - 1;    
+        k = a - 1;
 		matrix[l][k]=player;
        }
 
-}
+};
 
 
 
-void change_role()
+/*char change_role()
 {
 	if(player == 'x')
 		player = 'o';
 	else
 		player = 'x';
-}
+    return player;
+}*/
 
 
 
@@ -58,7 +63,8 @@ int check_num(int c)
 		{
 			cout<<"Error......\" this number already taken !!! \";Please,,, select another number : ";
 			cin>>r;
-			
+
+
 			while(r>9)
 			{cout<<"Error..... \" Number is greater than required !!! \" ;Please,,, select another number : ";
 			cin>>r;
@@ -66,47 +72,47 @@ int check_num(int c)
 			val=-1;
 			if(r!=c && matrix[0][r-1] != 'x' && matrix[0][r-1] != 'o')
 			{break;}
-			
+
 		}
 			if(val==1)
 			    {return c;}
 			else
 			    {return r;val=1;}
-		 
+
 	    }
-	
-	
+
+
 	 if(c > 3 && c < 10)
 	{
 		 hant1=c;
-		 
+
 		 while(c > 3 && c < 10)
             {
 				i += 1;
 				c -= 3;
 		    }
-         j = c - 1;    
+         j = c - 1;
 		while (matrix[i][j] == 'x'||matrix[i][j] == 'o')
 		{
 			cout<<"Error...... \" this number is already taken !!! \";Please,,, select another number : ";
 			cin>>r;
-			
+
 			while(r>9)
 			{cout<<"Error..... \" Number is greater than required !!! \" ;Please,,, select another number : ";
 			cin>>r;
 			}
 			val=-1;
 			 hant2=r;
-		 
+
 		 while(r > 3 && r < 10)
             {
 				d += 1;
 				r -= 3;
 		    }
-           f = r - 1;    
+           f = r - 1;
 			if(hant2!=hant1 && matrix[d][f] != 'x' && matrix[d][f] != 'o')
 			{break;}
-			
+
 			d=0;f=0;
 		}
 		if(val==1)
@@ -121,20 +127,20 @@ int check_num(int c)
 			{return c;}
 			}
 
-	
+
 }
 
 
 
 bool check_win()
 {
-	
+
 	if(v==1)
 	 {
 		 //player 1 (x)......................................................................................../////////////
-	
+
 	//for columuns
-	
+
 	while(col<3)
 	{
 		if((matrix[0][col]=='x'&& matrix[1][col]=='x'&& matrix[2][col])=='x')
@@ -144,10 +150,10 @@ bool check_win()
 		col++;
 	}
 	col=0;
-	
+
 
 	//for rows
-	while(row<3) 
+	while(row<3)
 	{
 		if(matrix[row][0]=='x'&& matrix[row][1]=='x'&& matrix[row][2]=='x')
 		{
@@ -173,7 +179,7 @@ bool check_win()
 	if(v==-1)
     {
 		//player 2 (o)............................................................../////////////////........
-	
+
 	//for columuns
 	while(col<3)
 	{
@@ -209,19 +215,27 @@ bool check_win()
 	}
 
     return false;
-	
+
 }
 
 
 int main(){
 	int in,out,coun=0;
-	
+	cout<<"X-O Game By Ans (; Have Fun"<<endl;
 	while(1)
 	{
 		game_draw();
 		cout<<endl;
-		cout<<"Enter the number you select: ";
-		cin>>in;
+		if(player=='x')
+		{
+		    cout<<"Enter the number you select player(1): ";
+            cin>>in;
+		}
+		else
+            {
+                cout<<"Enter the number you select player(2): ";
+                cin>>in;
+            }
 		out = check_num(in);
 		input(out);
 		if(check_win()&&v==1)
@@ -245,11 +259,16 @@ int main(){
 			 cout<<"game draw !! (;"<<endl;
 		 break;}
 
-		change_role();
+		if(player=='x')
+        {
+            player='o';
+        }
+        else
+        {
+            player='x';
+        }
 		coun++;
 		system("cls");
-	}
-
-
+        }
 
 }
